@@ -1,9 +1,23 @@
 ---
-
+import {GridScan} from "../GridScan"
+import Squares from "../../components/Squares"
 ---
 
-<div class="w-full min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-900 via-gray-800 to-cyan-900 px-4">
-    <div class="max-w-2xl mx-auto text-center">
+<div class="relative w-full min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-gray-900 via-gray-800 to-cyan-900 px-4">
+    <!-- GridScan como fondo -->
+    <div class="absolute inset-0 w-full h-full overflow-hidden">
+        <Squares 
+            speed={0.5}
+            squareSize={40}
+            direction="diagonal"
+            borderColor="#1f2538"
+            hoverFillColor="#222222"
+            client:only="react"
+            />
+    </div>
+    
+    <!-- Contenido del Hero por encima del GridScan -->
+    <div class="relative z-10 max-w-2xl mx-auto text-center">
         <h1 class="text-4xl md:text-5xl font-extrabold text-gray-100 mb-2">
             Hola, soy
         </h1>

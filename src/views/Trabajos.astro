@@ -1,4 +1,6 @@
 ---
+import FaultyTerminal from '../components/FaultyTerminal';
+
 const trabajos = [
     {
         title: "Desarrollador Web Frontend",
@@ -31,11 +33,35 @@ const trabajos = [
 ]
 ---
 
-<section class="bg-[#03193FFF] py-16 px-4" id="trabajos">
-    <h1 class="text-white text-5xl font-extrabold mb-12">Trabajos</h1>
+<section class="bg-[#03193FFF] py-16 px-4 relative min-h-screen" id="trabajos">
+    <div class="absolute inset-0 z-0">
+        <FaultyTerminal
+            scale={1.5}
+            gridMul={[2, 1]}
+            digitSize={1.2}
+            timeScale={0.5}
+            pause={false}
+            scanlineIntensity={0.5}
+            glitchAmount={1}
+            flickerAmount={1}
+            noiseAmp={1}
+            chromaticAberration={0}
+            dither={0}
+            curvature={0.1}
+            tint="#a3b0f0"
+            mouseReact
+            mouseStrength={0.5}
+            pageLoadAnimation
+            brightness={0.3}
+            client:only="react"
+        />
+    </div>
+
+    <div class="relative z-10">
+        <h1 class="text-white text-5xl font-extrabold mb-12">Trabajos</h1>
     <div class="flex flex-col md:flex-row md:flex-wrap gap-10 justify-center items-start">
         {trabajos.map(trabajo => (
-            <div class="relative bg-transparent border-2 border-white rounded-2xl p-0 w-full max-w-xl md:w-[32rem] shadow-lg transition-transform hover:scale-105">
+            <div class="relative bg-blue-900 border-2 border-white rounded-2xl p-0 w-full max-w-xl md:w-[32rem] shadow-lg transition-transform hover:scale-105">
                 {/* "Ventana" superior estilo navegador */}
                 <div class="flex items-center gap-2 px-6 pt-4 pb-2 border-b-2 border-white">
                     <span class="w-3 h-3 rounded-full bg-white inline-block"></span>
@@ -59,5 +85,6 @@ const trabajos = [
                 </div>
             </div>
         ))}
+        </div>
     </div>
 </section>

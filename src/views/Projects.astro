@@ -1,8 +1,25 @@
 ---
 import CardProjects from "../components/card/CardProjects.astro"
+import DotGrid from "../components/DotGrid"
 ---
 
-<section class="bg-blue-50 dark:bg-gray-900 p-8" id="projects">
-    <h1 class="font-bold text-6xl text-white w-full text-center">Projectos</h1>
-    <CardProjects />
+<section class="bg-blue-50 dark:bg-gray-900 p-8 min-h-screen relative" id="projects">
+    <div class="absolute inset-0 z-0">
+        <DotGrid
+            dotSize={5}
+            gap={15}
+            baseColor="#271E37"
+            activeColor="#5227FF"
+            proximity={120}
+            shockRadius={250}
+            shockStrength={5}
+            resistance={750}
+            returnDuration={1.5}
+            client:load
+        />
+    </div>
+    <div class="relative z-10">
+        <h1 class="font-bold text-6xl text-white w-full text-center">Projectos</h1>
+        <CardProjects />
+    </div>
 </section>
