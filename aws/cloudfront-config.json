@@ -1,0 +1,37 @@
+{
+  "Description": "Configuración CloudFront para Byttes Portfolio - S3 Static Website",
+  "Comment": "S3 Static Website Distribution",
+  "DefaultRootObject": "index.html",
+  "CacheBehaviors": [
+    {
+      "PathPattern": "*.html",
+      "ViewerProtocolPolicy": "redirect-to-https",
+      "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+      "Compress": true
+    },
+    {
+      "PathPattern": "*.css",
+      "ViewerProtocolPolicy": "redirect-to-https",
+      "CachePolicyId": "4135ea3d-c35d-46eb-81d7-rewrite46f8f00",
+      "Compress": true
+    },
+    {
+      "PathPattern": "*.js",
+      "ViewerProtocolPolicy": "redirect-to-https",
+      "CachePolicyId": "4135ea3d-c35d-46eb-81d7-rewrite46f8f00",
+      "Compress": true
+    },
+    {
+      "PathPattern": "*.{jpg,jpeg,png,gif,svg,webp,ico}",
+      "ViewerProtocolPolicy": "redirect-to-https",
+      "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+      "Compress": true
+    }
+  ],
+  "DefaultCacheBehavior": {
+    "ViewerProtocolPolicy": "redirect-to-https",
+    "CachePolicyId": "658327ea-f89d-4fab-a63d-7e88639e58f6",
+    "Compress": true
+  },
+  "WebACLId": "OPCIONAL_WAF_ARN"
+}
