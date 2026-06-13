@@ -9,6 +9,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://byttes.com',
   output: 'static',
+  // Optimizaciones para S3
   vite: {
       plugins: [
           tailwindcss()
@@ -17,8 +18,6 @@ export default defineConfig({
 
   integrations: [
     react(),
-    sitemap({
-      filter: (page) => !page.endsWith('/panel-interno-7f3a/')
-    })
+    sitemap()
   ]
 });
