@@ -1,0 +1,172 @@
+---
+interface Props {
+  local?: boolean
+  class?: string
+}
+
+const { local = false, class: className = "" } = Astro.props as Props
+---
+
+<div
+  id="pixel-pet"
+  class={`pixel-pet ${local ? "pixel-pet--local" : ""} ${className}`}
+  aria-hidden="true"
+>
+  <div class="pixel-pet__sprite" role="presentation">
+    <svg viewBox="0 0 84 44" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges" focusable="false">
+      <g class="pet-core" fill="currentColor">
+        <rect x="8" y="12" width="10" height="10" />
+        <rect x="18" y="10" width="12" height="12" />
+        <rect x="30" y="12" width="28" height="12" />
+        <rect x="22" y="20" width="36" height="10" />
+        <rect x="56" y="16" width="8" height="6" />
+        <rect x="62" y="18" width="8" height="4" />
+        <rect x="70" y="20" width="6" height="4" />
+        <rect x="10" y="8" width="4" height="4" />
+        <rect x="18" y="6" width="4" height="4" />
+        <rect x="26" y="6" width="4" height="4" />
+        <rect x="16" y="14" width="2" height="2" fill="#06100b" />
+      </g>
+
+      <g class="pet-leg-frame-a" fill="currentColor">
+        <rect x="28" y="30" width="8" height="10" />
+        <rect x="30" y="40" width="10" height="4" />
+        <rect x="48" y="30" width="8" height="10" />
+        <rect x="46" y="40" width="10" height="4" />
+      </g>
+
+      <g class="pet-leg-frame-b" fill="currentColor">
+        <rect x="30" y="30" width="8" height="10" />
+        <rect x="28" y="40" width="10" height="4" />
+        <rect x="46" y="30" width="8" height="10" />
+        <rect x="50" y="40" width="10" height="4" />
+      </g>
+    </svg>
+  </div>
+</div>
+
+<script>
+  const pet = document.getElementById("pixel-pet")
+
+  if (pet) {
+    const isLocal = pet.classList.contains("pixel-pet--local")
+    const localContainer = isLocal ? pet.parentElement : null
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+    if (reduceMotion) {
+      const reduceWidth = isLocal && localContainer ? localContainer.clientWidth : window.innerWidth
+      pet.style.setProperty("--pet-x", `${Math.max(12, reduceWidth - 120)}px`)
+      pet.style.setProperty("--pet-y", "0px")
+      pet.style.setProperty("--pet-dir", "1")
+    } else {
+      let x = 18
+      let y = 0
+      let direction = 1
+      let speed = 1.3
+      let isJumping = false
+      let isDucking = false
+      let velocityY = 0
+      let lastStepAt = 0
+      let rafId = 0
+
+      const setFacing = () => {
+        pet.style.setProperty("--pet-dir", String(-direction))
+      }
+
+      const jump = () => {
+        if (isJumping || isDucking) {
+          return
+        }
+
+        isJumping = true
+        velocityY = -8.2
+        pet.classList.add("is-jumping")
+      }
+
+      const duck = () => {
+        if (isJumping || isDucking) {
+          return
+        }
+
+        isDucking = true
+        pet.classList.add("is-ducking")
+
+        window.setTimeout(() => {
+          isDucking = false
+          pet.classList.remove("is-ducking")
+        }, 520)
+      }
+
+      const randomAction = () => {
+        const roll = Math.random()
+
+        if (roll < 0.24) {
+          jump()
+          return
+        }
+
+        if (roll < 0.44) {
+          duck()
+          return
+        }
+
+        if (roll < 0.63) {
+          speed = 0.8 + Math.random() * 2.1
+        }
+      }
+
+      const step = (now: any) => {
+        const petWidth = 92
+        const boundsWidth = isLocal && localContainer ? localContainer.clientWidth : window.innerWidth
+        const maxX = Math.max(8, boundsWidth - petWidth - 8)
+
+        if (!isDucking) {
+          x += direction * speed
+        }
+
+        if (x <= 8) {
+          x = 8
+          direction = 1
+          setFacing()
+        }
+
+        if (x >= maxX) {
+          x = maxX
+          direction = -1
+          setFacing()
+        }
+
+        if (isJumping) {
+          y += velocityY
+          velocityY += 0.42
+
+          if (y >= 0) {
+            y = 0
+            velocityY = 0
+            isJumping = false
+            pet.classList.remove("is-jumping")
+          }
+        }
+
+        if (!isJumping && !isDucking && now - lastStepAt > 120) {
+          pet.classList.toggle("is-step-b")
+          lastStepAt = now
+        }
+
+        pet.style.setProperty("--pet-x", `${x}px`)
+        pet.style.setProperty("--pet-y", `${y}px`)
+
+        rafId = window.requestAnimationFrame(step)
+      }
+
+      setFacing()
+      rafId = window.requestAnimationFrame(step)
+      const actionTimer = window.setInterval(randomAction, 1200)
+
+      window.addEventListener("beforeunload", () => {
+        window.cancelAnimationFrame(rafId)
+        window.clearInterval(actionTimer)
+      })
+    }
+  }
+</script>

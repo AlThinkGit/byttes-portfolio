@@ -1,32 +1,35 @@
-name: byttes website
+name: Deploy Astro to AWS S3
 
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+    branches:
+      - main # Cambia a master si tu rama principal se llama así
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout your repository using git
-        uses: actions/checkout@v4
-
-      - name: Install, build, and upload your site output
-        uses: withastro/action@v2
-
   deploy:
-    needs: build
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20 # Usa la versión de Node con la que trabajas
+
+    - name: Install dependencies
+      run: npm ci # Cambia por 'npm install' si no usas un archivo package-lock.json
+
+    - name: Build Astro project
+      run: npm run build
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1 # Cambia esto por la región donde creaste tu S3 si es diferente
+
+    - name: Sync files to S3
+      run: aws s3 sync dist/ s3://${{ secrets.AWS_S3_BUCKET }} --delete

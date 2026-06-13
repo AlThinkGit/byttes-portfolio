@@ -1,0 +1,78 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Footer from '../../components/home/Footer.astro'
+---
+
+<Layout
+  title="Calories Counter | Producto BYTTES"
+  description="Detalle de Calories Counter: stack, objetivo de desarrollo, finalidad y licenciamiento."
+  canonicalPath="/productos/calories-counter"
+>
+  <main class="terminal-page">
+    <section class="section services-hero-orbit">
+      <span class="services-hero-ship" aria-hidden="true"></span>
+      <div class="shell-window services-hero-shell">
+        <div class="shell-window__bar">
+          <span class="terminal-dot terminal-dot--red"></span>
+          <span class="terminal-dot terminal-dot--yellow"></span>
+          <span class="terminal-dot terminal-dot--green"></span>
+          <p class="shell-window__path">root@byttes:/productos/calories-counter</p>
+        </div>
+        <div class="shell-window__content">
+          <p class="prompt-line"><span class="prompt">$</span> product inspect calories-counter --verbose</p>
+          <h1>Calories Counter</h1>
+          <p class="lead">
+            Solucion digital para control nutricional y seguimiento de progreso, enfocada en consistencia de habitos y
+            analitica de evolucion.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="terminal-grid two-cols">
+        <article class="terminal-card">
+          <h2 class="section-title">En que esta hecha</h2>
+          <ul>
+            <li>Aplicacion web con interfaz orientada a registro rapido de consumo diario.</li>
+            <li>Servicios backend para consolidar historico, objetivos y metricas de avance.</li>
+            <li>Modelo preparado para evolucionar a esquemas multiusuario o acompanamiento profesional.</li>
+          </ul>
+        </article>
+
+        <article class="terminal-card">
+          <h2 class="section-title">Para que se hizo</h2>
+          <p>
+            Se desarrollo para cubrir la necesidad de seguimiento nutricional continuo, con una experiencia simple que
+            facilite disciplina y visibilidad del progreso en el tiempo.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section shell-window">
+      <div class="shell-window__content">
+        <h2 class="section-title">Finalidad</h2>
+        <p>
+          Ayudar a personas y equipos a convertir objetivos de salud en acciones medibles, con datos claros para ajustar
+          rutinas, planes y acompanamiento.
+        </p>
+      </div>
+    </section>
+
+    <section class="section shell-window">
+      <div class="shell-window__content">
+        <h2 class="section-title">Licenciamiento de Calories Counter</h2>
+        <p class="lead">
+          Si quieres usar Calories Counter como producto licenciable para tu empresa o comunidad, te guiamos en alcance,
+          branding y despliegue.
+        </p>
+        <div class="cta-group">
+          <a href="/contacto" class="btn-terminal">Solicitar licencia de Calories Counter</a>
+          <a href="/productos" class="btn-terminal btn-terminal--ghost">Volver a productos</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

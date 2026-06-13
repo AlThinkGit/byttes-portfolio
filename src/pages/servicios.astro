@@ -1,0 +1,140 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Footer from '../components/home/Footer.astro'
+
+const services = [
+  {
+    code: '01',
+    title: 'Web corporativa y presencia digital',
+    description: 'Sitios orientados a posicionamiento, confianza y captacion de oportunidades comerciales.',
+    image: '/projects/softcaribbeanWeb.jpg',
+    imageAlt: 'Vista previa de proyecto web corporativo'
+  },
+  {
+    code: '02',
+    title: 'Aplicaciones internas y automatizacion',
+    description: 'Herramientas para reducir tareas manuales, mejorar trazabilidad y acelerar procesos.',
+    image: '/projects/syncro.png',
+    imageAlt: 'Vista previa de aplicacion interna y automatizacion'
+  },
+  {
+    code: '03',
+    title: 'E-commerce y canales de venta',
+    description: 'Experiencias de compra optimizadas con integraciones de pago, inventario y analitica.',
+    image: '/projects/usishome.png',
+    imageAlt: 'Vista previa de experiencia de venta digital'
+  },
+  {
+    code: '04',
+    title: 'Mantenimiento y evolutivo',
+    description: 'Soporte tecnico, mejoras iterativas y monitoreo para sostener crecimiento continuo.',
+    image: '/projects/calories-counter.png',
+    imageAlt: 'Vista previa de mantenimiento evolutivo de producto'
+  }
+]
+
+const experiences: Array<{
+  title: string
+  summary: string
+  image: string
+  imageAlt: string
+  appUrl: string | null
+}> = [
+  {
+    title: 'SoftCaribbean Web',
+    summary: 'Sitio institucional con estructura corporativa, enfoque en performance y posicionamiento.',
+    image: '/projects/softcaribbeanWeb.jpg',
+    imageAlt: 'Proyecto SoftCaribbean Web',
+    appUrl: 'https://softcaribbean.com'
+  },
+  {
+    title: 'Us is Home',
+    summary: 'Landing y experiencia comercial optimizada para navegacion clara y conversion.',
+    image: '/projects/usishome.png',
+    imageAlt: 'Proyecto Usis Home',
+    appUrl: null
+  },
+  {
+    title: 'ZonaWork',
+    summary: 'Pagina web de coworking con informacion clara, optimizada para conversion y posicionamiento SEO local.',
+    image: '/projects/zonawork.png',
+    imageAlt: 'Pagina web ZonaWork',
+    appUrl: 'https://zonawork.co'
+  }
+]
+---
+
+<Layout title="Servicios | BYTTES">
+  <main class="terminal-page">
+      <section class="section services-hero-orbit">
+        <span class="services-hero-ship" aria-hidden="true"></span>
+      <div class="shell-window services-hero-shell">
+        <div class="shell-window__bar">
+          <span class="terminal-dot terminal-dot--red"></span>
+          <span class="terminal-dot terminal-dot--yellow"></span>
+          <span class="terminal-dot terminal-dot--green"></span>
+          <p class="shell-window__path">root@byttes:/servicios</p>
+        </div>
+        <div class="shell-window__content">
+          <p class="prompt-line"><span class="prompt">$</span> ls -la soluciones/</p>
+          <h1>Servicios diseñados para resultados medibles.</h1>
+          <p class="lead">
+            Construimos tecnologia aplicada a objetivos de negocio reales: conversion,
+            eficiencia operativa y crecimiento sostenible.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="terminal-grid two-cols">
+        {services.map((service) => (
+          <article class="terminal-card service-card">
+            <p class="service-code">{service.code}</p>
+            <div class="service-media">
+              <img src={service.image} alt={service.imageAlt} loading="lazy" class="service-media__img" />
+            </div>
+            <h3>{service.title}</h3>
+            <p>{service.description}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Experiencias</h2>
+      <div class="terminal-grid two-cols experiences-grid">
+        {experiences.map((experience) => (
+          <article class="terminal-card experience-card">
+            <div class="experience-card__media">
+              <img src={experience.image} alt={experience.imageAlt} loading="lazy" class="experience-card__img" />
+            </div>
+            <h3>{experience.title}</h3>
+            <p>{experience.summary}</p>
+            {experience.appUrl ? (
+              <a href={experience.appUrl} class="btn-terminal experience-card__cta" target="_blank" rel="noreferrer">
+                Ver aplicacion
+              </a>
+            ) : (
+              <span class="btn-terminal btn-terminal--disabled experience-card__cta" aria-disabled="true">
+                Aplicacion no disponible
+              </span>
+            )}
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section shell-window">
+      <div class="shell-window__content">
+        <h2 class="section-title">Necesitas una propuesta</h2>
+        <p class="lead">Te enviamos una ruta de ejecucion basada en tu contexto y prioridad actual.</p>
+        <div class="cta-group">
+          <a href="/contacto" class="btn-terminal">Solicitar propuesta</a>
+          <a href="/productos" class="btn-terminal btn-terminal--ghost">Ver productos licenciables</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

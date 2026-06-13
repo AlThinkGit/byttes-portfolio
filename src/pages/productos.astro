@@ -1,0 +1,88 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Footer from '../components/home/Footer.astro'
+
+const products = [
+  {
+    name: 'Syncro',
+    slug: 'syncro',
+    image: '/projects/syncro.png',
+    imageAlt: 'Aplicacion Syncro',
+    summary:
+      'Plataforma para operaciones internas: inventario, pedidos, trazabilidad y automatizacion de tareas repetitivas.',
+  },
+  {
+    name: 'Calories Counter',
+    slug: 'calories-counter',
+    image: '/projects/calories-counter.png',
+    imageAlt: 'Aplicacion Calories Counter',
+    summary:
+      'Aplicacion de gestion nutricional y control de progreso para usuarios y equipos que necesitan seguimiento diario.',
+  },
+]
+---
+
+<Layout title="Productos | BYTTES" description="Productos desarrollados por BYTTES y disponibles bajo licenciamiento.">
+  <main class="terminal-page">
+    <section class="section services-hero-orbit">
+      <span class="services-hero-ship" aria-hidden="true"></span>
+      <div class="shell-window services-hero-shell">
+        <div class="shell-window__bar">
+          <span class="terminal-dot terminal-dot--red"></span>
+          <span class="terminal-dot terminal-dot--yellow"></span>
+          <span class="terminal-dot terminal-dot--green"></span>
+          <p class="shell-window__path">root@byttes:/productos</p>
+        </div>
+        <div class="shell-window__content">
+          <p class="prompt-line"><span class="prompt">$</span> ls productos/ --tipo=licenciables</p>
+          <h1>Productos BYTTES listos para licenciamiento.</h1>
+          <p class="lead">
+            En esta seccion mostramos productos propios de la empresa, su contexto de desarrollo y su finalidad de negocio.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell-window">
+      <div class="shell-window__content">
+        <h2 class="section-title">Como desarrollamos en BYTTES</h2>
+        <p>
+          Nuestros productos nacen de problemas operativos reales detectados en empresas. Construimos versiones iniciales,
+          validamos uso en escenarios reales, medimos impacto y evolucionamos funcionalidades con foco en estabilidad,
+          seguridad y retorno para el negocio.
+        </p>
+        <p>
+          Cada producto incluye arquitectura mantenible, documentacion funcional y un plan de evolucion para adaptarse a
+          nuevos procesos de cada cliente.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Catalogo de productos</h2>
+      <div class="terminal-grid two-cols experiences-grid">
+        {products.map((product) => (
+          <article class="terminal-card experience-card">
+            <div class="experience-card__media">
+              <img src={product.image} alt={product.imageAlt} loading="lazy" class="experience-card__img" />
+            </div>
+            <h3>{product.name}</h3>
+            <p>{product.summary}</p>
+            <a href={`/productos/${product.slug}`} class="btn-terminal experience-card__cta">Ver detalle tecnico</a>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section shell-window">
+      <div class="shell-window__content">
+        <h2 class="section-title">Buscas licenciar un producto</h2>
+        <p class="lead">Escribenos y te compartimos alcance, condiciones de licenciamiento y ruta de implementacion.</p>
+        <div class="cta-group">
+          <a href="/contacto" class="btn-terminal">Hablar sobre licencias</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

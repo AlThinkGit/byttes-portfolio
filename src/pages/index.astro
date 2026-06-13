@@ -1,14 +1,325 @@
 ---
 import Layout from '../layouts/Layout.astro'
-import Home from '../views/Home.astro'
-import Projects from '../views/Projects.astro'
-import Trabajos from '../views/Trabajos.astro'
 import Footer from '../components/home/Footer.astro'
+import PixelPet from '../components/PixelPet.astro'
 ---
 
-<Layout>
-  <Home />
-  <Projects />
-  <Trabajos />
+<Layout title="BYTTES | Soluciones digitales para empresas">
+  <main class="terminal-page">
+    <section class="hero-viewport">
+      <div class="hero-viewport__content">
+        <p class="prompt-line"><span class="prompt">$</span> ./iniciar-compania.sh --modo empresa</p>
+        <h1>Desarrollamos tecnologia para acelerar tu negocio.</h1>
+        <p class="hero-rotating-line">
+          <span class="prompt">&gt;</span>
+          <span id="rotating-phrase">Desarrollamos paginas web</span>
+          <span class="hero-caret" aria-hidden="true"></span>
+        </p>
+        <p class="lead">
+          En BYTTES convertimos objetivos de negocio en sistemas digitales,
+          sitios corporativos y plataformas orientadas a conversion.
+        </p>
+        <div class="cta-group">
+          <a href="/servicios" class="btn-terminal">Ver servicios</a>
+          <a href="/contacto" class="btn-terminal btn-terminal--ghost">Solicitar propuesta</a>
+        </div>
+
+        <PixelPet local class="hero-pet" />
+      </div>
+    </section>
+
+    <section class="section pixel-quote-section" aria-label="Frases de vision empresarial en terminal">
+      <p class="pixel-quote pixel-quote-line">
+        <span class="prompt">&gt;</span>
+        <span id="rotating-quote">La tecnologia no vale por lo que muestra, sino por lo que transforma.</span>
+        <span class="pixel-quote-caret" aria-hidden="true"></span>
+      </p>
+    </section>
+
+    <section class="section about-viewport">
+      <div class="about-viewport__content">
+        <article class="terminal-card about-card">
+          <h2 class="section-title">Quienes somos</h2>
+          <p>
+            Somos una empresa de desarrollo con 4 años de experiencia en el mercado,
+            desarrollando aplicaciones a la medida y paginas web para empresas que
+            buscan crecer con tecnologia confiable y escalable.
+          </p>
+          <div class="cta-group">
+            <a href="/nosotros" class="btn-terminal">Ir a Nosotros</a>
+          </div>
+        </article>
+
+        <aside class="shell-window about-terminal" aria-label="Terminal con ilustracion ASCII de desarrollador">
+          <div class="shell-window__bar">
+            <span class="terminal-dot terminal-dot--red"></span>
+            <span class="terminal-dot terminal-dot--yellow"></span>
+            <span class="terminal-dot terminal-dot--green"></span>
+            <p class="shell-window__path">root@byttes:/developer.ascii</p>
+          </div>
+          <div class="shell-window__content">
+            <p class="prompt-line"><span class="prompt">$</span> cat developer_profile.txt</p>
+            <pre id="developer-ascii" class="developer-ascii"></pre>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Servicios</h2>
+      <div class="terminal-grid three-cols">
+        <article class="terminal-card service-card">
+          <p class="service-code">01</p>
+          <pre id="service-ascii-1" class="service-ascii" aria-label="ASCII de sitio web"></pre>
+          <h3>Paginas y plataformas corporativas</h3>
+          <p>Web empresarial con performance, SEO tecnico y experiencia clara para usuarios.</p>
+          <a href="/servicios" class="btn-terminal btn-terminal--ghost service-card__cta">Ver este servicio</a>
+        </article>
+        <article class="terminal-card service-card">
+          <p class="service-code">02</p>
+          <pre id="service-ascii-2" class="service-ascii" aria-label="ASCII de automatizacion"></pre>
+          <h3>Automatizacion y procesos</h3>
+          <p>Flujos para ventas, operaciones y soporte conectados con tus herramientas actuales.</p>
+          <a href="/servicios" class="btn-terminal btn-terminal--ghost service-card__cta">Ver este servicio</a>
+        </article>
+        <article class="terminal-card service-card">
+          <p class="service-code">03</p>
+          <pre id="service-ascii-3" class="service-ascii" aria-label="ASCII de mantenimiento"></pre>
+          <h3>Evolucion continua</h3>
+          <p>Mantenimiento, mejora de UX y optimizacion de conversion basada en datos.</p>
+          <a href="/servicios" class="btn-terminal btn-terminal--ghost service-card__cta">Ver este servicio</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="section shell-window final-cta-viewport">
+      <div class="shell-window__bar">
+        <span class="terminal-dot terminal-dot--red"></span>
+        <span class="terminal-dot terminal-dot--yellow"></span>
+        <span class="terminal-dot terminal-dot--green"></span>
+        <p class="shell-window__path">root@byttes:/escribenos</p>
+      </div>
+      <div class="shell-window__content">
+        <h2 class="section-title">Tu siguiente version puede empezar hoy</h2>
+        <p class="lead">Conversemos sobre tus metas y diseñamos una ruta tecnica alineada al negocio.</p>
+        <div class="cta-group cta-group--final">
+          <span class="cta-ship" aria-hidden="true"></span>
+          <a href="/contacto" class="btn-terminal btn-terminal--contact">Ir a contactanos</a>
+          <a href="/nosotros" class="btn-terminal btn-terminal--ghost">Conocer el equipo</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const rotatingPhrase = document.getElementById("rotating-phrase")
+    const heroPhrases = [
+      "Paginas web",
+      "Software a la medida",
+      "Bots de WhastApp",
+    ]
+
+    if (rotatingPhrase) {
+      let phraseIndex = 0
+      let charIndex = 0
+      let isDeleting = false
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+      if (!reduceMotion) {
+        const typeLoop = () => {
+          const currentPhrase = heroPhrases[phraseIndex]
+
+          if (isDeleting) {
+            charIndex -= 1
+          } else {
+            charIndex += 1
+          }
+
+          rotatingPhrase.textContent = currentPhrase.slice(0, charIndex)
+
+          let delay = isDeleting ? 42 : 78
+
+          if (!isDeleting && charIndex === currentPhrase.length) {
+            delay = 1200
+            isDeleting = true
+          } else if (isDeleting && charIndex === 0) {
+            isDeleting = false
+            phraseIndex = (phraseIndex + 1) % heroPhrases.length
+            delay = 260
+          }
+
+          window.setTimeout(typeLoop, delay)
+        }
+
+        rotatingPhrase.textContent = ""
+        window.setTimeout(typeLoop, 420)
+      } else {
+        rotatingPhrase.textContent = heroPhrases[0]
+      }
+    }
+
+    const rotatingQuote = document.getElementById("rotating-quote")
+    const quotePhrases = [
+      "La tecnologia no vale por lo que muestra, sino por lo que transforma.",
+      "Cada automatizacion ahorra horas que tu equipo puede usar para crecer.",
+      "Una buena plataforma no solo funciona: impulsa decisiones.",
+      "El software correcto convierte procesos lentos en resultados medibles.",
+      "Digitalizar no es modernizar pantallas, es optimizar el negocio.",
+    ]
+
+    if (rotatingQuote) {
+      let quoteIndex = 0
+      let quoteCharIndex = 0
+      let isDeletingQuote = false
+      const reduceMotionQuote = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+      if (!reduceMotionQuote) {
+        const typeQuoteLoop = () => {
+          const currentQuote = quotePhrases[quoteIndex]
+
+          if (isDeletingQuote) {
+            quoteCharIndex -= 1
+          } else {
+            quoteCharIndex += 1
+          }
+
+          rotatingQuote.textContent = currentQuote.slice(0, quoteCharIndex)
+
+          let delay = isDeletingQuote ? 22 : 38
+
+          if (!isDeletingQuote && quoteCharIndex === currentQuote.length) {
+            delay = 1900
+            isDeletingQuote = true
+          } else if (isDeletingQuote && quoteCharIndex === 0) {
+            isDeletingQuote = false
+            quoteIndex = (quoteIndex + 1) % quotePhrases.length
+            delay = 280
+          }
+
+          window.setTimeout(typeQuoteLoop, delay)
+        }
+
+        rotatingQuote.textContent = ""
+        window.setTimeout(typeQuoteLoop, 620)
+      } else {
+        rotatingQuote.textContent = quotePhrases[0]
+      }
+    }
+
+    const developerAscii = document.getElementById("developer-ascii")
+
+    if (developerAscii) {
+      const asciiArt = [
+        "        .------------.",
+        "       / .----------. \\",
+        "      / /  .----.    \\ \\",
+        "      | |  |o  o|    | |",
+        "      | |  | -- |    | |",
+        "      | |  |____|    | |",
+        "      | | /|____|\\   | |",
+        "      | |/  /  \\  \\  | |",
+        "      | '----------' | |",
+        "       \\______________/ /",
+        "        \\_____||______/ ",
+        "             /||\\",
+        "            /_||_\\",
+      ].join("\n")
+
+      const reduceMotionAscii = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+      if (reduceMotionAscii) {
+        developerAscii.textContent = asciiArt
+      } else {
+        let asciiIndex = 0
+
+        const typeAscii = () => {
+          asciiIndex += 1
+          developerAscii.textContent = asciiArt.slice(0, asciiIndex)
+
+          if (asciiIndex < asciiArt.length) {
+            window.setTimeout(typeAscii, 10)
+          }
+        }
+
+        window.setTimeout(typeAscii, 350)
+      }
+    }
+
+    const reduceMotionServiceAscii = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    const serviceAsciiEntries = [
+      {
+        id: "service-ascii-1",
+        art: [
+          "  .------------------------------------.",
+          " / .----------------------------------. \\",
+          "| | [ BYTTES // Corporate Platform ]  | |",
+          "| |----------------------------------| |",
+          "| |  Inicio   Nosotros   Servicios   | |",
+          "| |----------------------------------| |",
+          "| |  KPI Leads: +37%   SEO: OK       | |",
+          "| |  UX Score: 95/100  Core: PASS    | |",
+          "| |__________________________________| |",
+          "|/____________________________________\\|",
+        ].join("\n"),
+      },
+      {
+        id: "service-ascii-2",
+        art: [
+          "         .-=======================-.",
+          "      .-'   BOT ENGINE / FLOW AI    '-.",
+          "     /   [IN] ---> [RULES] ---> [OUT]  \\",
+          "    /------------------------------------\\",
+          "    |  CRM  |  WhatsApp API |  Tickets  |",
+          "    |-------+---------------+-----------|",
+          "    | Lead  |  Reply Bot    |  Followup |",
+          "    | Sync  |  Auto Quote   |  Reminder |",
+          "    |_______|_______________|___________|",
+          "         \\__________________________/",
+        ].join("\n"),
+      },
+      {
+        id: "service-ascii-3",
+        art: [
+          "     .--------------------------------.",
+          "    /  MONITOREO + MANTENIMIENTO 24/7  \\",
+          "   /------------------------------------\\",
+          "   |  [CPU] #######--- 73%             |",
+          "   |  [RAM] #####----- 52%             |",
+          "   |  [NET] ########-- 80%             |",
+          "   |------------------------------------|",
+          "   |  PATCH v2.4.1      STATUS: APPLIED|",
+          "   |  BACKUP 03:00      STATUS: DONE   |",
+          "   |____________________________________|",
+        ].join("\n"),
+      },
+    ]
+
+    serviceAsciiEntries.forEach((entry, entryIndex) => {
+      const target = document.getElementById(entry.id)
+
+      if (!target) {
+        return
+      }
+
+      if (reduceMotionServiceAscii) {
+        target.textContent = entry.art
+        return
+      }
+
+      let position = 0
+
+      const typeServiceAscii = () => {
+        position += 1
+        target.textContent = entry.art.slice(0, position)
+
+        if (position < entry.art.length) {
+          window.setTimeout(typeServiceAscii, 8)
+        }
+      }
+
+      window.setTimeout(typeServiceAscii, 650 + entryIndex * 260)
+    })
+  </script>
+
   <Footer />
 </Layout>
