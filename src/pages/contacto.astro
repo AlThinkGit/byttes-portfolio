@@ -1,0 +1,268 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Footer from '../components/home/Footer.astro'
+---
+
+<Layout title="Contacto | BYTTES">
+  <main class="terminal-page">
+    <section class="section shell-window">
+      <div class="shell-window__bar">
+        <span class="terminal-dot terminal-dot--red"></span>
+        <span class="terminal-dot terminal-dot--yellow"></span>
+        <span class="terminal-dot terminal-dot--green"></span>
+        <p class="shell-window__path">root@byttes:/contacto</p>
+      </div>
+      <div class="shell-window__content">
+        <p class="prompt-line"><span class="prompt">$</span> ./abrir-canal-comercial.sh</p>
+        <div class="contact-intro">
+          <div class="contact-intro__text">
+            <h1>Hablemos de tu proyecto</h1>
+            <p class="lead">Comparte tu objetivo y te responderemos con un plan accionable.</p>
+            <div class="contact-lines">
+              <p><span class="prompt">$</span> correo: contacto@byttes.com</p>
+              <p><span class="prompt">$</span> telefono: +57 314 854 4461 - +57 323 944 4117</p>
+              <p><span class="prompt">$</span> ubicacion: Medellin, Colombia</p>
+              <p><span class="prompt">$</span> horario: Lun - Vie / 8:00 a.m. - 6:00 p.m.</p>
+            </div>
+          </div>
+
+          <figure class="terminal-bot" aria-hidden="true">
+            <div class="terminal-bot__screen">
+              <span class="terminal-bot__eye"></span>
+              <span class="terminal-bot__eye"></span>
+              <span class="terminal-bot__mouth"></span>
+            </div>
+            <div class="terminal-bot__body"></div>
+            <figcaption class="terminal-bot__caption">[ online ] asesor virtual</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell-window">
+      <div class="shell-window__content">
+        <h2 class="section-title">Enviarnos un mensaje</h2>
+        <p class="lead">Completa el formulario y te responderemos en menos de 24 horas habiles.</p>
+
+        <form class="contact-form" data-contact-form>
+          <div class="contact-form__grid">
+            <label class="contact-form__field">
+              <span>Nombre</span>
+              <input type="text" name="from_name" autocomplete="name" minlength="2" maxlength="80" required />
+            </label>
+
+            <label class="contact-form__field">
+              <span>Correo</span>
+              <input type="email" name="reply_to" autocomplete="email" required />
+            </label>
+
+            <label class="contact-form__field">
+              <span>Empresa</span>
+              <input type="text" name="company" autocomplete="organization" minlength="2" maxlength="100" required />
+            </label>
+
+            <label class="contact-form__field">
+              <span>Telefono</span>
+              <input type="tel" name="phone" autocomplete="tel" inputmode="tel" pattern="^\+?[0-9()\-\s]{7,20}$" required />
+            </label>
+          </div>
+
+          <label class="contact-form__field contact-form__field--full">
+            <span>Mensaje</span>
+            <textarea name="message" rows="6" minlength="10" maxlength="2000" required></textarea>
+          </label>
+
+          <div class="cta-group">
+            <button type="submit" class="btn-terminal" data-contact-submit>Enviar mensaje</button>
+            <a class="btn-terminal btn-terminal--ghost" href="/servicios">Ver servicios</a>
+          </div>
+          <p class="contact-form__status" data-contact-status aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  import emailjs from '@emailjs/browser'
+
+  const form = document.querySelector('[data-contact-form]')
+  const submitButton = document.querySelector('[data-contact-submit]')
+  const statusNode = document.querySelector('[data-contact-status]')
+  const toastNode = document.createElement('div')
+  let toastTimeoutId = 0
+
+  toastNode.className = 'contact-toast'
+  toastNode.setAttribute('role', 'status')
+  toastNode.setAttribute('aria-live', 'polite')
+  document.body.appendChild(toastNode)
+
+  if (!(form instanceof HTMLFormElement) || !(submitButton instanceof HTMLButtonElement) || !(statusNode instanceof HTMLParagraphElement)) {
+    throw new Error('No se pudo inicializar el formulario de contacto.')
+  }
+
+  const serviceId = import.meta.env.PUBLIC_EMAILJS_SERVICE_ID
+  const templateId = import.meta.env.PUBLIC_EMAILJS_TEMPLATE_ID
+  const publicKey = import.meta.env.PUBLIC_EMAILJS_PUBLIC_KEY
+
+  const hasEmailJsConfig = serviceId && templateId && publicKey
+
+  const showToast = (message: any, type: 'success' | 'error') => {
+    window.clearTimeout(toastTimeoutId)
+    toastNode.textContent = message
+    toastNode.classList.remove('is-success', 'is-error', 'is-visible')
+    toastNode.classList.add(type === 'success' ? 'is-success' : 'is-error', 'is-visible')
+    toastTimeoutId = window.setTimeout(() => {
+      toastNode.classList.remove('is-visible')
+    }, 5000)
+  }
+
+  const normalizeText = (value: any) => String(value ?? '').trim()
+
+  const getEmailError = (value: any) => {
+    if (!value) {
+      return 'El correo es obligatorio.'
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
+    if (!emailRegex.test(value)) {
+      return 'El correo no tiene un formato valido.'
+    }
+
+    return ''
+  }
+
+  const getPhoneError = (value: any) => {
+    if (!value) {
+      return 'El telefono es obligatorio.'
+    }
+
+    const phoneRegex = /^\+?[0-9()\-\s]{7,20}$/
+    if (!phoneRegex.test(value)) {
+      return 'El telefono debe contener solo numeros y puede incluir +, espacios, parentesis o guiones.'
+    }
+
+    return ''
+  }
+
+  const getValidationError = (payload: any) => {
+    if (!payload.from_name || payload.from_name.length < 2) {
+      return 'Ingresa un nombre valido (minimo 2 caracteres).'
+    }
+
+    const nameRegex = /^(?=.{2,80}$)[\p{L}\s.'-]+$/u
+    if (!nameRegex.test(payload.from_name)) {
+      return 'El nombre contiene caracteres no permitidos.'
+    }
+
+    const emailError = getEmailError(payload.reply_to)
+    if (emailError) {
+      return emailError
+    }
+
+    if (!payload.company || payload.company.length < 2) {
+      return 'Ingresa el nombre de la empresa (minimo 2 caracteres).'
+    }
+
+    const phoneError = getPhoneError(payload.phone)
+    if (phoneError) {
+      return phoneError
+    }
+
+    if (!payload.message || payload.message.length < 10) {
+      return 'El mensaje debe tener al menos 10 caracteres.'
+    }
+
+    return ''
+  }
+
+  const getEmailJsErrorMessage = (error: any) => {
+    if (typeof error !== 'object' || error === null) {
+      return 'No se pudo enviar el mensaje. Intenta de nuevo en unos minutos.'
+    }
+
+    const maybeError = error
+
+    const text = typeof maybeError.text === 'string' ? maybeError.text.trim() : ''
+    const message = typeof maybeError.message === 'string' ? maybeError.message.trim() : ''
+    const status = typeof maybeError.status === 'number' ? ` (codigo ${maybeError.status})` : ''
+
+    const detail = text || message
+    if (!detail) {
+      return `No se pudo enviar el mensaje${status}. Intenta de nuevo en unos minutos.`
+    }
+
+    return `Error al enviar con EmailJS${status}: ${detail}`
+  }
+
+  if (!hasEmailJsConfig) {
+    statusNode.textContent = 'Configura EmailJS en el archivo .env para habilitar el envio.'
+    statusNode.classList.add('is-error')
+    submitButton.disabled = true
+    showToast('Configura EmailJS en el archivo .env para habilitar el envio.', 'error')
+  }
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault()
+
+    if (!hasEmailJsConfig) {
+      return
+    }
+
+    if (!form.reportValidity()) {
+      statusNode.textContent = 'Revisa los campos marcados del formulario antes de enviar.'
+      statusNode.classList.remove('is-success')
+      statusNode.classList.add('is-error')
+      showToast('Hay errores en el formulario. Corrigelos antes de continuar.', 'error')
+      return
+    }
+
+    const formData = new FormData(form)
+    const payload = {
+      from_name: normalizeText(formData.get('from_name')),
+      reply_to: normalizeText(formData.get('reply_to')),
+      company: normalizeText(formData.get('company')),
+      phone: normalizeText(formData.get('phone')),
+      message: normalizeText(formData.get('message'))
+    }
+
+    const validationError = getValidationError(payload)
+    if (validationError) {
+      statusNode.textContent = validationError
+      statusNode.classList.remove('is-success')
+      statusNode.classList.add('is-error')
+      showToast(validationError, 'error')
+      return
+    }
+
+    submitButton.disabled = true
+    submitButton.textContent = 'Enviando...'
+    statusNode.textContent = 'Enviando mensaje...'
+    statusNode.classList.remove('is-error', 'is-success')
+
+    try {
+      await emailjs.send(
+        serviceId,
+        templateId,
+        payload,
+        {
+          publicKey
+        }
+      )
+
+      statusNode.textContent = 'Mensaje enviado correctamente. Te responderemos pronto.'
+      statusNode.classList.add('is-success')
+      showToast('Mensaje enviado correctamente.', 'success')
+      form.reset()
+    } catch (error) {
+      const errorMessage = getEmailJsErrorMessage(error)
+      statusNode.textContent = errorMessage
+      statusNode.classList.add('is-error')
+      showToast(errorMessage, 'error')
+    } finally {
+      submitButton.disabled = false
+      submitButton.textContent = 'Enviar mensaje'
+    }
+  })
+</script>

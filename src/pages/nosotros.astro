@@ -1,0 +1,148 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Footer from '../components/home/Footer.astro'
+---
+
+<Layout title="Nosotros | BYTTES">
+  <main class="terminal-page about-page">
+    <section class="section about-hero-viewport">
+      <div class="shell-window about-hero-shell">
+        <div class="shell-window__bar">
+          <span class="terminal-dot terminal-dot--red"></span>
+          <span class="terminal-dot terminal-dot--yellow"></span>
+          <span class="terminal-dot terminal-dot--green"></span>
+          <p class="shell-window__path">root@byttes:/nosotros</p>
+        </div>
+        <div class="shell-window__content">
+          <p class="prompt-line"><span class="prompt">$</span> cat identidad_empresa.md</p>
+          <h1>Somos un equipo tecnico con mentalidad de negocio.</h1>
+          <p class="lead">
+            BYTTES integra estrategia, diseno y desarrollo para construir productos
+            digitales estables, rapidos y listos para escalar.
+          </p>
+          <div class="hero-fight" aria-hidden="true">
+            <div class="mini-fighter mini-fighter--left">
+              <span class="mini-fighter__head"></span>
+              <span class="mini-fighter__body"></span>
+              <span class="mini-fighter__arm"></span>
+              <span class="mini-fighter__leg mini-fighter__leg--left"></span>
+              <span class="mini-fighter__leg mini-fighter__leg--right"></span>
+            </div>
+            <div class="mini-fighter mini-fighter--right">
+              <span class="mini-fighter__head"></span>
+              <span class="mini-fighter__body"></span>
+              <span class="mini-fighter__arm"></span>
+              <span class="mini-fighter__leg mini-fighter__leg--left"></span>
+              <span class="mini-fighter__leg mini-fighter__leg--right"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Nuestra forma de trabajo</h2>
+      <div class="terminal-card roadmap-shell">
+        <p class="prompt-line"><span class="prompt">$</span> ./proceso-byttes --roadmap</p>
+        <ol class="roadmap-list">
+          <li class="roadmap-step">
+            <span class="roadmap-step__index">01</span>
+            <div class="roadmap-step__content">
+              <h3>Diagnostico inicial</h3>
+              <p>Analizamos objetivos, cuellos de botella y oportunidades tecnicas del negocio.</p>
+            </div>
+          </li>
+          <li class="roadmap-step">
+            <span class="roadmap-step__index">02</span>
+            <div class="roadmap-step__content">
+              <h3>Plan de ejecucion</h3>
+              <p>Definimos alcance y roadmap con hitos claros para entregar valor desde temprano.</p>
+            </div>
+          </li>
+          <li class="roadmap-step">
+            <span class="roadmap-step__index">03</span>
+            <div class="roadmap-step__content">
+              <h3>Construccion</h3>
+              <p>Desarrollamos soluciones con estandares modernos de calidad, seguridad y rendimiento.</p>
+            </div>
+          </li>
+          <li class="roadmap-step">
+            <span class="roadmap-step__index">04</span>
+            <div class="roadmap-step__content">
+              <h3>Mejora continua</h3>
+              <p>Monitoreamos y optimizamos para aumentar conversion y estabilidad operativa.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" style="margin: 12rem 0;">
+      <h2 class="section-title">Conoce el equipo</h2>
+      <div class="terminal-grid two-cols team-grid">
+        <article class="terminal-card team-card">
+          <div class="team-photo-shell" aria-label="Foto del equipo estilo terminal">
+            <img src="/team/alejo.png" alt="Alejandro Hurtado, cofundador y desarrollador" class="team-photo-terminal" loading="lazy" />
+          </div>
+          <h3>Alejandro Hurtado</h3>
+          <p>
+            Fundador y desarrollador principal. Apasionado por la tecnologia aplicada a resultados de negocio.
+          </p>
+        </article>
+
+        <article class="terminal-card team-card">
+          <div class="team-photo-shell" aria-label="Foto del equipo estilo terminal">
+            <img src="/team/yeison.png" alt="Yeison, cofundador y desarrollador" class="team-photo-terminal" loading="lazy" />
+          </div>
+          <h3>Yeison Camilo Moreno</h3>
+          <p>
+            Fundador y desarrollador. Enfocado en construir soluciones tecnicas robustas y escalables.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section shell-window about-contact-section">
+      <div class="shell-window__bar">
+        <span class="terminal-dot terminal-dot--red"></span>
+        <span class="terminal-dot terminal-dot--yellow"></span>
+        <span class="terminal-dot terminal-dot--green"></span>
+        <p class="shell-window__path">root@byttes:/contacto</p>
+      </div>
+      <div class="shell-window__content about-contact-grid">
+        <div class="about-contact-copy">
+          <h2 class="section-title">Listo para trabajar juntos</h2>
+          <p class="lead">
+            Si estas buscando un equipo cercano, claro en la comunicacion y fuerte
+            en ejecucion tecnica, nos encantaria escucharte.
+          </p>
+          <p class="about-contact-text">
+            Cuentanos en que etapa esta tu proyecto y te ayudamos a definir una
+            ruta realista para lanzarlo, optimizarlo o escalarlo.
+          </p>
+          <p class="about-contact-text">
+            Respondemos con enfoque de negocio, sin vueltas tecnicas innecesarias.
+          </p>
+          <div class="cta-group">
+            <a href="/contacto" class="btn-terminal">Contactanos</a>
+            <a href="/servicios" class="btn-terminal btn-terminal--ghost">Ver servicios</a>
+          </div>
+        </div>
+
+        <div class="about-phone-wrap" aria-hidden="true">
+          <div class="about-phone-terminal">
+            <div class="about-phone-notch"></div>
+            <div class="about-phone-screen">
+              <p class="about-phone-line"><span class="prompt">$</span> abrir-canal-comercial</p>
+              <p class="about-phone-msg">[BYTTES] Hola, cuentanos tu objetivo.</p>
+              <p class="about-phone-msg">[CLIENTE] Quiero mejorar ventas y procesos.</p>
+              <p class="about-phone-msg">[BYTTES] Perfecto, te enviamos propuesta hoy.</p>
+              <p class="about-phone-status">status: conectado</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

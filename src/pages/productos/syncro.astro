@@ -1,0 +1,78 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Footer from '../../components/home/Footer.astro'
+---
+
+<Layout
+  title="Syncro | Producto BYTTES"
+  description="Detalle de Syncro: tecnologia, objetivo de negocio, finalidad y licenciamiento."
+  canonicalPath="/productos/syncro"
+>
+  <main class="terminal-page">
+    <section class="section services-hero-orbit">
+      <span class="services-hero-ship" aria-hidden="true"></span>
+      <div class="shell-window services-hero-shell">
+        <div class="shell-window__bar">
+          <span class="terminal-dot terminal-dot--red"></span>
+          <span class="terminal-dot terminal-dot--yellow"></span>
+          <span class="terminal-dot terminal-dot--green"></span>
+          <p class="shell-window__path">root@byttes:/productos/syncro</p>
+        </div>
+        <div class="shell-window__content">
+          <p class="prompt-line"><span class="prompt">$</span> product inspect syncro --verbose</p>
+          <h1>Syncro</h1>
+          <p class="lead">
+            Plataforma para centralizar operaciones internas, mejorar trazabilidad y reducir tiempos manuales en procesos
+            diarios.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="terminal-grid two-cols">
+        <article class="terminal-card">
+          <h2 class="section-title">En que esta hecha</h2>
+          <ul>
+            <li>Frontend web responsive para operacion diaria del equipo.</li>
+            <li>Backend orientado a gestion de inventario, pedidos y estados operativos.</li>
+            <li>Arquitectura modular para integraciones con ERP, pasarelas o herramientas internas.</li>
+          </ul>
+        </article>
+
+        <article class="terminal-card">
+          <h2 class="section-title">Para que se hizo</h2>
+          <p>
+            Syncro se construyo para resolver desorden operativo: datos dispersos, pasos manuales repetidos y baja
+            visibilidad de pedidos e inventario entre areas.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section shell-window">
+      <div class="shell-window__content">
+        <h2 class="section-title">Finalidad</h2>
+        <p>
+          Estandarizar la operacion, disminuir errores de ejecucion y dar trazabilidad en tiempo real para tomar decisiones
+          con datos confiables.
+        </p>
+      </div>
+    </section>
+
+    <section class="section shell-window">
+      <div class="shell-window__content">
+        <h2 class="section-title">Licenciamiento de Syncro</h2>
+        <p class="lead">
+          Si quieres implementar Syncro en tu empresa, te acompanamos con licenciamiento, parametrizacion y puesta en
+          marcha.
+        </p>
+        <div class="cta-group">
+          <a href="/contacto" class="btn-terminal">Solicitar licencia de Syncro</a>
+          <a href="/productos" class="btn-terminal btn-terminal--ghost">Volver a productos</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

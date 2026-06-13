@@ -1,0 +1,76 @@
+---
+import Layout from "../../layouts/Layout.astro"
+import { getCollection } from "astro:content"
+import type { CollectionEntry } from "astro:content"
+
+export const prerender = true
+
+export async function getStaticPaths() {
+  const posts = (await getCollection("blog")).filter((post: CollectionEntry<"blog">) => !post.data.draft)
+
+  return posts.map((post: CollectionEntry<"blog">) => ({
+    params: { slug: post.id.replace(/\.md$/, "") },
+    props: { post },
+  }))
+}
+
+const { post } = Astro.props as { post: CollectionEntry<"blog"> }
+const { Content } = await post.render()
+const postSlug = post.id.replace(/\.md$/, "")
+
+const articlePath = `/blog/${postSlug}/`
+const pageTitle = `${post.data.title} | Blog BYTTES`
+const pageDescription = post.data.description
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: post.data.pubDate.toISOString(),
+  dateModified: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
+  author: {
+    "@type": "Person",
+    name: post.data.author,
+  },
+}
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalPath={articlePath}
+  type="article"
+  image={post.data.ogImage ?? "/favicon.png"}
+  publishedTime={post.data.pubDate.toISOString()}
+  modifiedTime={(post.data.updatedDate ?? post.data.pubDate).toISOString()}
+  jsonLd={jsonLd}
+>
+  <main class="terminal-page blog-post-page">
+    <article class="shell-window blog-post">
+      <div class="shell-window__bar">
+        <span class="terminal-dot terminal-dot--red"></span>
+        <span class="terminal-dot terminal-dot--yellow"></span>
+        <span class="terminal-dot terminal-dot--green"></span>
+        <p class="shell-window__path">root@byttes:/blog/{postSlug}.md</p>
+      </div>
+
+      <div class="shell-window__content blog-post__content">
+        <p class="blog-post__meta">
+          {post.data.pubDate.toLocaleDateString("es-CO", { dateStyle: "long" })} · {post.data.author}
+        </p>
+        <h1>{post.data.title}</h1>
+        <p class="lead">{post.data.description}</p>
+
+        <div class="blog-post__body">
+          <Content />
+        </div>
+      </div>
+    </article>
+
+    <div class="section blog-post__footer-actions">
+      <a href="/blog" class="btn-terminal">Volver al blog</a>
+      <a href="/contacto" class="btn-terminal btn-terminal--ghost">Hablar con BYTTES</a>
+    </div>
+  </main>
+</Layout>

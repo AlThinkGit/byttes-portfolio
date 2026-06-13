@@ -1,0 +1,61 @@
+---
+import Layout from "../../layouts/Layout.astro"
+import { getCollection } from "astro:content"
+import type { CollectionEntry } from "astro:content"
+
+const allPosts = (await getCollection("blog")).filter((post: CollectionEntry<"blog">) => !post.data.draft)
+
+const posts = allPosts.sort((a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) => {
+  return b.data.pubDate.getTime() - a.data.pubDate.getTime()
+})
+
+const pageTitle = "Blog BYTTES | SEO, tecnologia y crecimiento digital"
+const pageDescription = "Publicaciones semanales sobre SEO, desarrollo web, automatizacion y estrategias digitales para empresas."
+
+const postsWithSlug: Array<{ post: CollectionEntry<"blog">; slug: string }> = posts.map(
+  (post: CollectionEntry<"blog">) => ({
+    post,
+    slug: post.id.replace(/\.md$/, ""),
+  })
+)
+---
+
+<Layout title={pageTitle} description={pageDescription} canonicalPath="/blog" type="website">
+  <main class="terminal-page blog-page">
+    <section class="shell-window blog-hero">
+      <div class="shell-window__bar">
+        <span class="terminal-dot terminal-dot--red"></span>
+        <span class="terminal-dot terminal-dot--yellow"></span>
+        <span class="terminal-dot terminal-dot--green"></span>
+        <p class="shell-window__path">root@byttes:/blog</p>
+      </div>
+      <div class="shell-window__content">
+        <p class="prompt-line"><span class="prompt">$</span> ls ./insights --orderby=date</p>
+        <h1>Blog BYTTES</h1>
+        <p class="lead">Publicaciones semanales para mejorar SEO, conversion y operaciones digitales.</p>
+      </div>
+    </section>
+
+    <section class="section blog-list" aria-label="Listado de articulos del blog">
+      {postsWithSlug.map(({ post, slug }) => (
+        <article class="terminal-card blog-card">
+          <p class="blog-card__meta">
+            <span>{post.data.pubDate.toLocaleDateString("es-CO", { dateStyle: "long" })}</span>
+            <span>·</span>
+            <span>{post.data.author}</span>
+          </p>
+          <h2 class="blog-card__title">
+            <a href={`/blog/${slug}/`}>{post.data.title}</a>
+          </h2>
+          <p class="blog-card__description">{post.data.description}</p>
+          <ul class="blog-card__tags" aria-label="Etiquetas del articulo">
+            {post.data.tags.map((tag: string) => (
+              <li>#{tag}</li>
+            ))}
+          </ul>
+          <a class="btn-terminal btn-terminal--ghost" href={`/blog/${slug}/`}>Leer articulo</a>
+        </article>
+      ))}
+    </section>
+  </main>
+</Layout>
