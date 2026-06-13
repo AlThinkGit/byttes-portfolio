@@ -2,10 +2,9 @@
 
 import { S3Client, PutObjectCommand, DeleteObjectCommand, ListObjectsV2Command } from '@aws-sdk/client-s3';
 import { CloudFrontClient, CreateInvalidationCommand } from '@aws-sdk/client-cloudfront';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { createReadStream } from 'fs';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import mime from 'mime-types';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -78,7 +77,7 @@ async function uploadFile(s3Path, filePath) {
 
 async function getExistingFiles() {
   const files = new Set();
-  let continuationToken = undefined;
+  let continuationToken;
 
   try {
     do {
@@ -155,7 +154,7 @@ async function deployToS3() {
     const items = fs.readdirSync(dir);
     items.forEach(item => {
       const fullPath = path.join(dir, item);
-      const s3Path = path.join(basePrefix, item).replace(/\\/g, '/');
+      const s3Path = path.join(basePrefix, item).replaceAll('\\', '/');
 
       if (fs.statSync(fullPath).isDirectory()) {
         walkDir(fullPath, s3Path);
@@ -193,7 +192,9 @@ async function deployToS3() {
 }
 
 // Ejecutar deploy
-deployToS3().catch(error => {
+try {
+  await deployToS3();
+} catch (error) {
   console.error('\n❌ Error fatal:', error);
   process.exit(1);
-});
+}
