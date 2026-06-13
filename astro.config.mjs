@@ -9,7 +9,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://byttes.com',
   output: 'static',
-  // Optimizaciones para S3
+  trailingSlash: 'always',
   vite: {
       plugins: [
           tailwindcss()
