@@ -19,7 +19,7 @@ jobs:
         node-version: 20 # Usa la versión de Node con la que trabajas
 
     - name: Install dependencies
-      run: npm ci # Cambia por 'npm install' si no usas un archivo package-lock.json
+      run: npm install --legacy-peer-deps
 
     - name: Build Astro project
       run: npm run build
